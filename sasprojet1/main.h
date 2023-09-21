@@ -32,4 +32,8 @@ void sortElementsByTitle();
 long long calc_deadline(int y, int m, int d);
 long long calculateTimeLeft(int year, int month, int day, int hour, int minute, int second);
 double secondsToDays(long long seconds);
+void sortbydeadline();
+void printjust3();
+void split_tasks();
+void showdeadlineforalltasks();
 #endif // MAIN_H

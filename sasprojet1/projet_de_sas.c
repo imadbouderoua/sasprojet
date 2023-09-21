@@ -39,10 +39,17 @@ void traiter_choix(int choix) {
             modify();
             break;
         case '3':
-            printf("1-trier par nom\n2-trier par deadline\n");scanf("%d",&tchoix);
+            printf("1-trier par nom\n2-trier par deadline\n3-to show only 3days left tasks");scanf("%d",&tchoix);
             if(tchoix == 1)
                 sortElementsByTitle();
-            //else if(tchoix == 2)
+            else if(tchoix == 2)
+                sortbydeadline();
+            else if(tchoix ==  3){
+                printjust3();
+                break;
+            }else{
+                break;
+            }
 
             printelements();
             break;
@@ -59,7 +66,17 @@ void traiter_choix(int choix) {
             findchr(title);}
             break;
         case '6':
-            
+            printf("1-show stats\n2-SEE timeleft for every task\n");
+            int schoix;scanf("%d",&schoix);
+            if(schoix == 1){
+                printf("STATS\n");
+                printf("TOTAL TASKS %d",id);
+                split_tasks();
+            }else if(schoix == 2){
+                    showdeadlineforalltasks();
+            }else {
+                printf("sorry we dont have that yet\n");
+            }
             break;
         default:
             printf("Invalid choice. Please try again.\n");

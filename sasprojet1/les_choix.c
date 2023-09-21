@@ -35,9 +35,12 @@ void addlist() {
     
     while(1){
     printf("Enter task deadline (DD/M/Y/H/MIN/S): ");
-scanf(" %99[^\n]%*c", elements[id].deadline);
 
-    if(checkwe9t(elements[id].deadline)){ break;} //first check dl mochkil 1
+    char tester[40];
+            scanf(" %99[^\n]", tester);
+    char *p ;p = strdup(tester);
+    if(!isValidDeadlineFormat(p)) continue;
+    if(checkwe9t(tester)){strcpy(elements[id].deadline,tester);break;} //first check dl mochkil 1
     }
     
     while(1){
@@ -122,6 +125,7 @@ int find(int sid) {
     int i;
     for (i = 0; i < id; i++) {
         if (sid == elements[i].id) {
+            system("clear");
             printf("ID : %d TASK NAME : %s\n"
                    "description :\n%s\n"
                    "deadline : %s\n"
@@ -134,13 +138,16 @@ int find(int sid) {
             return i;
         }
     }
+    system("clear");
     printf("       not found\n");
+
     return -1;
 }
 
 void findchr(char *title){
     for(int i = 0;i < id;i++ ){
             if(strcmp(title,elements[i].title) == 0){
+                system("clear");
                 printf("ID : %d TASK NAME : %s\n"
                    "description :\n%s\n"
                    "deadline : %s\n"
@@ -153,19 +160,22 @@ void findchr(char *title){
                 return;
             }
     }
+    system("clear");
     printf("not found\n");
 }
 void modify() {
     printf("Enter the person id: ");
     int id;
     scanf("%d", &id);
-
+    sleep(1);
+    system("clear");
     int i = find(id);
     if (i == -1) {
 
         printf("Person with ID %d not found.\n", id);
         return;
     }
+    
     while(1){
     printf("What do you want to modify:\n");
     printf("1. Description\n");
@@ -213,6 +223,7 @@ void modify() {
  
     int length = calcLength();
     printf("Modified person %d information successfully.\n", id);
+    sleep(3);
     save(length);
 }
 
@@ -222,20 +233,25 @@ int calcLength() {
 void delete(){
     printf("enter the task id\n");
     int td;scanf("%d",&td);
+    system("clear");
     int index  = find(td);
-
+    
     if (index < 0 || index >= id) {
         printf("Invalid index for deletion.\n");
+        sleep(1);
         return;
     }
-
+    
     for (int i = index; i < id - 1; i++) {
         elements[i] = elements[i + 1];
     }
 
     id--;
-
+    printf("TASK DELETED & OTHER ");
+    sleep(2);
+    system("clear");
     save(id);
+
 }
 
 int checkwe9t(char deadlinee[]){
@@ -313,8 +329,11 @@ long long calculateTimeLeft(int year, int month, int day, int hour, int minute, 
     return timeDifference;
 }
 void printjust3(){
+    int valid = 0;
+    //printf("dkhel");
     for(int i = 0; i < id;i++){
         if(elements[i].lefttime > 3) continue;
+        valid = 1;
         printf("ID : %d TASK NAME : %s\n"
                 "description :\n%s\n"
                 "deadline : %s\n"
@@ -326,6 +345,7 @@ void printjust3(){
             printf("\n");
     }
     printf("\n");
+    if(valid == 0) printf("no tasks under 3\n");
 }
 void split_tasks(){
     int done=0;int yet= 0;
@@ -339,7 +359,7 @@ void split_tasks(){
     
     if (total > 0) {
         float percentage_done = (float)done / total * 100.0;
-        printf("Done: %d\nYet: %d\nPercentage of Completed Tasks: %.2f%%\n\n\n", done, yet, percentage_done);
+        printf("\nDone: %d\nYet: %d\nPercentage of Completed Tasks: %.2f%%\n\n\n", done, yet, percentage_done);
     } else {
         printf("No tasks found.\n");
     }
@@ -354,6 +374,37 @@ void showdeadlineforalltasks(){
     }
     printf("\n");
 }
+int isValidDeadlineFormat(const char *input) {
+    // Check if the input string has exactly 5 '/'
+    int count = 0;
+    for (int i = 0; input[i] != '\0'; i++) {
+        if (input[i] == '/') {
+            count++;
+        }
+    }
+    if (count != 5) {
+        return 0; // Invalid format
+    }
 
+    // Split the input string into parts using '/' as a delimiter
+    char *tokens[6];
+    char *token = strtok((char *)input, "/");
+    int i = 0;
+    while (token != NULL && i < 6) {
+        tokens[i++] = token;
+        token = strtok(NULL, "/");
+    }
 
-
+    // Check if each part can be converted to an integer
+    for (i = 0; i < 6; i++) {
+        if (tokens[i] == NULL) {
+            return 0; // Missing part
+        }
+        char *endptr;
+        strtol(tokens[i], &endptr, 10);
+        if (*endptr != '\0') {
+            return 0; // Not a valid integer
+        }
+    }
+    return 1; // Valid format
+}

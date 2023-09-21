@@ -4,7 +4,7 @@ int id = 0;
 
 int main() {
     id = import(id);
-    printf("%d",id);
+    printf("imported %d",id);
     while (1) {
         printf("                     WELCOME TO YOUR TODO                         \n"
                "        1-Ajouter une task\n"

@@ -45,7 +45,7 @@ void chekwho() {
         sleep(60);
         paswtime = 0;
         }
-    printf(PURPLE "1 - Admin\n2 - User\n" RESET);
+    printf(PURPLE "1 - Admin\n2 - User\n3 - quit" RESET);
     int i;
     scanf("%d", &i);
     if (i == 1){
@@ -73,7 +73,9 @@ void chekwho() {
             sleep(2);
             system("./a.out");
             }
-    } else{
+    }else if(i == 3)
+        exit(0);
+     else{
         printf(RED "Please choose just 1 of the following.\n" RESET);
         sleep(2);
         system("./a.out");

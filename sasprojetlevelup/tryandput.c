@@ -45,7 +45,7 @@ void chekwho() {
         sleep(60);
         paswtime = 0;
         }
-    printf(PURPLE "1 - Admin\n2 - User\n3 - quit" RESET);
+    printf(PURPLE "1 - Admin\n2 - User\n3 - quit\n" RESET);
     int i;
     scanf("%d", &i);
     if (i == 1){
@@ -54,7 +54,7 @@ void chekwho() {
         if(strcmp(password,"jesuisadmin") != 0){
             paswtime++;
             system("clear");
-            printf(RED "password invalide\n try again\n" RESET);
+            printf(RED "password invalide try again\n" RESET);
             chekwho();
             }
 
